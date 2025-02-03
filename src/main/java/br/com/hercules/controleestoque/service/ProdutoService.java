@@ -17,7 +17,7 @@ public interface ProdutoService {
 
     public Produto alterarProduto(Long id, Produto produtoAtualizado);
 
-    public void deleteProduto(Long id);
+    public void deletarProduto(Long id);
 
 
 

@@ -3,10 +3,11 @@ package br.com.hercules.controleestoque.service.impl;
 import br.com.hercules.controleestoque.model.Produto;
 import br.com.hercules.controleestoque.repository.ProdutoRepository;
 import br.com.hercules.controleestoque.service.ProdutoService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
+@Service
 public class ProdutoServiceImpl implements ProdutoService {
 
     private final ProdutoRepository produtoRepository;
@@ -46,7 +47,7 @@ public class ProdutoServiceImpl implements ProdutoService {
     }
 
     @Override
-    public void deleteProduto(Long id) {
+    public void deletarProduto(Long id) {
         produtoRepository.deleteById(id);
     }
 }
