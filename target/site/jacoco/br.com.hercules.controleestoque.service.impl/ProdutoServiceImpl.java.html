@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProdutoServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">controleestoque</a> &gt; <a href="index.source.html" class="el_package">br.com.hercules.controleestoque.service.impl</a> &gt; <span class="el_source">ProdutoServiceImpl.java</span></div><h1>ProdutoServiceImpl.java</h1><pre class="source lang-java linenums">package br.com.hercules.controleestoque.service.impl;
+
+import br.com.hercules.controleestoque.model.Produto;
+import br.com.hercules.controleestoque.repository.ProdutoRepository;
+import br.com.hercules.controleestoque.service.ProdutoService;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class ProdutoServiceImpl implements ProdutoService {
+
+    private final ProdutoRepository produtoRepository;
+
+<span class="fc" id="L15">    public ProdutoServiceImpl(ProdutoRepository produtoRepository) {</span>
+<span class="fc" id="L16">        this.produtoRepository = produtoRepository;</span>
+<span class="fc" id="L17">    }</span>
+
+    @Override
+    public Produto produtoGetById(Long id) {
+<span class="fc" id="L21">        return produtoRepository.findById(id).orElseThrow(() -&gt; new RuntimeException(&quot;Produto não encontrado!&quot;));</span>
+    }
+
+    @Override
+    public List&lt;Produto&gt; findAllProdutos() {
+<span class="nc" id="L26">        return produtoRepository.findAll();</span>
+    }
+
+    @Override
+    public Produto createProduto(Produto produtoToCreate) {
+<span class="fc" id="L31">        return produtoRepository.save(produtoToCreate);</span>
+    }
+
+    @Override
+    public List&lt;Produto&gt; produtoGetByDescricao(String descricao) {
+<span class="nc" id="L36">        return produtoRepository.findByDescricaoContainingIgnoreCase(descricao);</span>
+    }
+
+    @Override
+    public Produto alterarProduto(Long id, Produto produtoAtualizado) {
+<span class="fc" id="L41">        Produto produto = produtoGetById(id);</span>
+<span class="fc" id="L42">        produto.setDescricao(produtoAtualizado.getDescricao());</span>
+<span class="fc" id="L43">        produto.setQuantidade(produtoAtualizado.getQuantidade());</span>
+<span class="fc" id="L44">        produto.setPreco(produtoAtualizado.getPreco());</span>
+<span class="fc" id="L45">        return produtoRepository.save(produto);</span>
+
+    }
+
+    @Override
+    public void deletarProduto(Long id) {
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        if(!produtoRepository.existsById(id)){</span>
+<span class="fc" id="L52">            throw new RuntimeException(&quot;Produto não encontrado!&quot;);</span>
+        }
+<span class="fc" id="L54">        produtoRepository.deleteById(id);</span>
+<span class="fc" id="L55">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

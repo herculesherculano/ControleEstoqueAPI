@@ -43,12 +43,12 @@ public class ProdutoController {
         return ResponseEntity.created(location).body(produtoCreated);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     public ResponseEntity<Produto> atualizarProduto(@PathVariable Long id, @RequestBody Produto produto){
         return ResponseEntity.ok(produtoService.alterarProduto(id, produto));
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public ResponseEntity<Produto> deletarProduto(@PathVariable Long id){
         produtoService.deletarProduto(id);
         return ResponseEntity.noContent().build();

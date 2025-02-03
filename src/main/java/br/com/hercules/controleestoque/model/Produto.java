@@ -16,6 +16,16 @@ public class Produto {
 
     private double preco;
 
+    public Produto() {
+    }
+
+    public Produto(Long id, String descricao, int quantidade, double preco) {
+        this.descricao = descricao;
+        this.quantidade = quantidade;
+        this.preco = preco;
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }
