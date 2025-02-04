@@ -33,6 +33,12 @@ public class ProdutoController {
         return ResponseEntity.ok(produto);
     }
 
+    @GetMapping("/descricao")
+    public ResponseEntity<List<Produto>>getProdutosByDescricao(@RequestParam String descricao){
+        var listaProdutosDescricao = produtoService.produtoGetByDescricao(descricao);
+        return ResponseEntity.ok(listaProdutosDescricao);
+    }
+
     @PostMapping
     public ResponseEntity<Produto> saveProduto(@RequestBody Produto produtoToCreate){
         var produtoCreated = produtoService.createProduto(produtoToCreate);
@@ -45,7 +51,7 @@ public class ProdutoController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Produto> atualizarProduto(@PathVariable Long id, @RequestBody Produto produto){
-        return ResponseEntity.ok(produtoService.alterarProduto(id, produto));
+        return ResponseEntity.ok(produtoService.atualizarProduto(id, produto));
     }
 
     @DeleteMapping("/{id}")

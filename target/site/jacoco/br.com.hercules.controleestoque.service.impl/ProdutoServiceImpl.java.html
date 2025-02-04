@@ -33,16 +33,16 @@ public class ProdutoServiceImpl implements ProdutoService {
 
     @Override
     public List&lt;Produto&gt; produtoGetByDescricao(String descricao) {
-<span class="nc" id="L36">        return produtoRepository.findByDescricaoContainingIgnoreCase(descricao);</span>
+<span class="fc" id="L36">        return produtoRepository.findByDescricaoContainingIgnoreCase(descricao);</span>
     }
 
     @Override
-    public Produto alterarProduto(Long id, Produto produtoAtualizado) {
-<span class="fc" id="L41">        Produto produto = produtoGetById(id);</span>
-<span class="fc" id="L42">        produto.setDescricao(produtoAtualizado.getDescricao());</span>
-<span class="fc" id="L43">        produto.setQuantidade(produtoAtualizado.getQuantidade());</span>
-<span class="fc" id="L44">        produto.setPreco(produtoAtualizado.getPreco());</span>
-<span class="fc" id="L45">        return produtoRepository.save(produto);</span>
+    public Produto atualizarProduto(Long id, Produto produtoAtualizado) {
+<span class="fc" id="L41">        Produto produtoExistente = produtoRepository.findById(id).orElseThrow( () -&gt; new RuntimeException(&quot;Produto não encontrado!&quot;));</span>
+<span class="fc" id="L42">        produtoExistente.setDescricao(produtoAtualizado.getDescricao());</span>
+<span class="fc" id="L43">        produtoExistente.setQuantidade(produtoAtualizado.getQuantidade());</span>
+<span class="fc" id="L44">        produtoExistente.setPreco(produtoAtualizado.getPreco());</span>
+<span class="fc" id="L45">        return produtoRepository.save(produtoExistente);</span>
 
     }
 

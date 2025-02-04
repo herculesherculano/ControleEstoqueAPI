@@ -33,25 +33,31 @@ public class ProdutoController {
 <span class="nc" id="L33">        return ResponseEntity.ok(produto);</span>
     }
 
+    @GetMapping(&quot;/descricao&quot;)
+    public ResponseEntity&lt;List&lt;Produto&gt;&gt;getProdutosByDescricao(@RequestParam String descricao){
+<span class="nc" id="L38">        var listaProdutosDescricao = produtoService.produtoGetByDescricao(descricao);</span>
+<span class="nc" id="L39">        return ResponseEntity.ok(listaProdutosDescricao);</span>
+    }
+
     @PostMapping
     public ResponseEntity&lt;Produto&gt; saveProduto(@RequestBody Produto produtoToCreate){
-<span class="nc" id="L38">        var produtoCreated = produtoService.createProduto(produtoToCreate);</span>
-<span class="nc" id="L39">        URI location = ServletUriComponentsBuilder.fromCurrentRequest()</span>
-<span class="nc" id="L40">                .path(&quot;/{id}&quot;)</span>
-<span class="nc" id="L41">                .buildAndExpand(produtoCreated.getId())</span>
-<span class="nc" id="L42">                .toUri();</span>
-<span class="nc" id="L43">        return ResponseEntity.created(location).body(produtoCreated);</span>
+<span class="nc" id="L44">        var produtoCreated = produtoService.createProduto(produtoToCreate);</span>
+<span class="nc" id="L45">        URI location = ServletUriComponentsBuilder.fromCurrentRequest()</span>
+<span class="nc" id="L46">                .path(&quot;/{id}&quot;)</span>
+<span class="nc" id="L47">                .buildAndExpand(produtoCreated.getId())</span>
+<span class="nc" id="L48">                .toUri();</span>
+<span class="nc" id="L49">        return ResponseEntity.created(location).body(produtoCreated);</span>
     }
 
     @PutMapping(&quot;/{id}&quot;)
     public ResponseEntity&lt;Produto&gt; atualizarProduto(@PathVariable Long id, @RequestBody Produto produto){
-<span class="nc" id="L48">        return ResponseEntity.ok(produtoService.alterarProduto(id, produto));</span>
+<span class="nc" id="L54">        return ResponseEntity.ok(produtoService.atualizarProduto(id, produto));</span>
     }
 
     @DeleteMapping(&quot;/{id}&quot;)
     public ResponseEntity&lt;Produto&gt; deletarProduto(@PathVariable Long id){
-<span class="nc" id="L53">        produtoService.deletarProduto(id);</span>
-<span class="nc" id="L54">        return ResponseEntity.noContent().build();</span>
+<span class="nc" id="L59">        produtoService.deletarProduto(id);</span>
+<span class="nc" id="L60">        return ResponseEntity.noContent().build();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -15,7 +15,7 @@ public interface ProdutoService {
 
     public List<Produto> produtoGetByDescricao(String descricao);
 
-    public Produto alterarProduto(Long id, Produto produtoAtualizado);
+    public Produto atualizarProduto(Long id, Produto produtoAtualizado);
 
     public void deletarProduto(Long id);
 

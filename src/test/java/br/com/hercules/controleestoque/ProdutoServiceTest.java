@@ -10,6 +10,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -110,7 +113,7 @@ public class ProdutoServiceTest {
 
 
         //when
-        Produto resultado = produtoService.alterarProduto(id,produtoAtualizado);
+        Produto resultado = produtoService.atualizarProduto(id,produtoAtualizado);
 
         //then
         assertThat(resultado.getDescricao()).isEqualTo("Guitarra");
@@ -119,5 +122,56 @@ public class ProdutoServiceTest {
         verify(produtoRepository, times(1)).save(produtoExistente);
     }
 
+    @Test
+    void deveLancarExcecaoAtualizarProdutoInexistente(){
+        //Given
+        Long id = 99L;
+        Produto produtoAtualizado= new Produto(id,"Nova descricao", 10, 20);
+        when(produtoRepository.findById(id)).thenReturn(Optional.empty());
+
+        //when
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> produtoService.atualizarProduto(id,produtoAtualizado));
+
+        //then
+        assertThat(exception.getMessage()).isEqualTo("Produto não encontrado!");
+    }
+
+    @Test
+    void deveBuscarProdutoPorDescricao(){
+        //Given
+        String descricao = "Guitarra";
+        List<Produto> produtos = List.of(
+                new Produto(1L,"Guitarra Fender",2,10000),
+                new Produto(2L,"Guitarra Gibson",3,15000)
+        );
+
+        when(produtoRepository.findByDescricaoContainingIgnoreCase(descricao)).thenReturn(produtos);
+
+        //When
+        List<Produto> resultado = produtoService.produtoGetByDescricao(descricao);
+
+        //then
+        assertThat(resultado).isNotEmpty();
+        assertThat(resultado.size()).isEqualTo(2);
+        assertThat(resultado.get(0).getDescricao()).contains("Fender");
+        assertThat(resultado.get(1).getDescricao()).contains("Gibson");
+
+        verify(produtoRepository,times(1)).findByDescricaoContainingIgnoreCase(descricao);
+    }
+
+    @Test
+    void deveRetornarListaVaziaQuandoNaoEncontrarProdutos(){
+        //Given
+        String descricao ="Piano";
+        when(produtoRepository.findByDescricaoContainingIgnoreCase(descricao)).thenReturn(Collections.emptyList());
+
+        //When
+        List<Produto> resultado = produtoService.produtoGetByDescricao(descricao);
+
+        //then
+        assertThat(resultado).isEmpty();
+        verify(produtoRepository,times(1)).findByDescricaoContainingIgnoreCase(descricao);
+
+    }
 
 }
