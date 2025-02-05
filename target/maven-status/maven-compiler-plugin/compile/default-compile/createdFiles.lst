@@ -1,0 +1,8 @@
+br\com\hercules\controleestoque\service\ProdutoService.class
+br\com\hercules\controleestoque\controller\ProdutoController.class
+br\com\hercules\controleestoque\ControleestoqueApplication.class
+br\com\hercules\controleestoque\exception\GlobalExceptionHandler.class
+br\com\hercules\controleestoque\repository\ProdutoRepository.class
+br\com\hercules\controleestoque\exception\ResourceNotFoundException.class
+br\com\hercules\controleestoque\model\Produto.class
+br\com\hercules\controleestoque\service\impl\ProdutoServiceImpl.class

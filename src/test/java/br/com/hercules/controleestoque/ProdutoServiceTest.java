@@ -1,5 +1,6 @@
 package br.com.hercules.controleestoque;
 
+import br.com.hercules.controleestoque.exception.ResourceNotFoundException;
 import br.com.hercules.controleestoque.model.Produto;
 import br.com.hercules.controleestoque.repository.ProdutoRepository;
 import br.com.hercules.controleestoque.service.ProdutoService;
@@ -71,7 +72,7 @@ public class ProdutoServiceTest {
     @Test
     void deveLancarExcecaoQuandoProdutoNaoExistir(){
         when(produtoRepository.findById(99L)).thenReturn(Optional.empty());
-        RuntimeException excecao = assertThrows(RuntimeException.class, () -> produtoService.produtoGetById(99L));
+        RuntimeException excecao = assertThrows(ResourceNotFoundException.class, () -> produtoService.produtoGetById(99L));
 
         assertThat(excecao.getMessage()).isEqualTo("Produto não encontrado!");
     }
@@ -95,7 +96,7 @@ public class ProdutoServiceTest {
         when(produtoRepository.existsById(99L)).thenReturn(false);
 
         //when
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> produtoService.deletarProduto(99L));
+        RuntimeException exception = assertThrows(ResourceNotFoundException.class, () -> produtoService.deletarProduto(99L));
 
         //then
         assertThat(exception.getMessage()).isEqualTo("Produto não encontrado!");
@@ -130,7 +131,7 @@ public class ProdutoServiceTest {
         when(produtoRepository.findById(id)).thenReturn(Optional.empty());
 
         //when
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> produtoService.atualizarProduto(id,produtoAtualizado));
+        RuntimeException exception = assertThrows(ResourceNotFoundException.class, () -> produtoService.atualizarProduto(id,produtoAtualizado));
 
         //then
         assertThat(exception.getMessage()).isEqualTo("Produto não encontrado!");

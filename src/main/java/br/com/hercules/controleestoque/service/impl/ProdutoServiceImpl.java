@@ -1,5 +1,6 @@
 package br.com.hercules.controleestoque.service.impl;
 
+import br.com.hercules.controleestoque.exception.ResourceNotFoundException;
 import br.com.hercules.controleestoque.model.Produto;
 import br.com.hercules.controleestoque.repository.ProdutoRepository;
 import br.com.hercules.controleestoque.service.ProdutoService;
@@ -18,7 +19,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 
     @Override
     public Produto produtoGetById(Long id) {
-        return produtoRepository.findById(id).orElseThrow(() -> new RuntimeException("Produto não encontrado!"));
+        return produtoRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado!"));
     }
 
     @Override
@@ -38,7 +39,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 
     @Override
     public Produto atualizarProduto(Long id, Produto produtoAtualizado) {
-        Produto produtoExistente = produtoRepository.findById(id).orElseThrow( () -> new RuntimeException("Produto não encontrado!"));
+        Produto produtoExistente = produtoRepository.findById(id).orElseThrow( () -> new ResourceNotFoundException("Produto não encontrado!"));
         produtoExistente.setDescricao(produtoAtualizado.getDescricao());
         produtoExistente.setQuantidade(produtoAtualizado.getQuantidade());
         produtoExistente.setPreco(produtoAtualizado.getPreco());
@@ -49,7 +50,7 @@ public class ProdutoServiceImpl implements ProdutoService {
     @Override
     public void deletarProduto(Long id) {
         if(!produtoRepository.existsById(id)){
-            throw new RuntimeException("Produto não encontrado!");
+            throw new ResourceNotFoundException("Produto não encontrado!");
         }
         produtoRepository.deleteById(id);
     }
